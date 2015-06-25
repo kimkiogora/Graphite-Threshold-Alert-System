@@ -3,5 +3,5 @@ A customisable system that sits between graphite client and graphite backend ser
 
 Dependencies
 --------------
-Java SDK,JRE Version 6 and above
+Python version 2.7 > greater
 Graphite/Grafana available from URL, http://graphite.wikidot.com/
