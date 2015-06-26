@@ -14,6 +14,12 @@ cat /var/log/applications/some_info.log | grep "`date +%Y' '%b' '%d" "%H:%M --da
 
 Principle: The ` hostname`-Service-Failure-Rate, should be configured in the conf/props.ini on the value, WATCH_SERVICES. An alert will be sent based on the conditions provided. If not configured, then GTA will just do normal routing
 
+Tests
+----------
+Run the server using the init_script.sh, init_script.sh start. Server listens on port 10000
+
+Send data using netcat, echo "KE-B2C-SAF-Service-Failure-Rate-37-`date +%s`" |nc localhost 10000
+
 Project Status
 ---------------
 Dev is Open and On-going
