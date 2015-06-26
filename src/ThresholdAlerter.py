@@ -63,16 +63,13 @@ class Parent:
             CUtils.logger('waiting for a connection')
             connection, client_address = sock.accept()
             try:
-                CUtils.logger('connection from', client_address)
+                CUtils.logger("connection from " + str(client_address))
                 data = connection.recv(1024)
-                CUtils.logger('received "%s"' % data)
+                CUtils.logger('received ' + str(data))
                 response = 'OK'
-                CUtils.logger('Send response %s' % response)
+                CUtils.logger('Send response ' + str(response))
                 connection.sendall(response)
                 CUtils.logger('Sent')
-                
-                "set to non-blocking IO, then process request"
-                #create_task(data)
             finally:
                 # Clean up the connection
                 connection.close()
