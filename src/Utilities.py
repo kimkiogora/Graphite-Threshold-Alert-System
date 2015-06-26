@@ -7,7 +7,12 @@ import ConfigParser
 
 class CUtility:
     # Global dynamic variables [ data from external XML configs will be stored in this variables ]
+    READ_BYTES = 1024
+    GAT_PORT = ''
     CONFIG_FILE = "conf/props.ini"
+    SERVICES_CONFIG_FILE = "conf/service_configs.ini"
+    GRAPHITE_SERVER = ''
+    GRAPHITE_PORT = ''
     ALERT = ''
     ALERT_EVENTS = ''
     ALERT_TYPES = ''
@@ -19,12 +24,15 @@ class CUtility:
     LOG_FILE = "/var/log/applications/GraphiteThresholdAlerter.log"
 
     infoLog = logging.getLogger('GraphiteThresholdAlerter')
-    logging.basicConfig(level=logging.INFO, format= \
-        "%(asctime)s - %(levelname)s - %(message)s", filename=LOG_FILE, filemode='a')
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s",
+                        filename=LOG_FILE, filemode='a')
 
     def load_properties(self):
         self.logger('Loading properties...')
         try:
+            self.GAT_PORT = int(self.get_property('General', self.CONFIG_FILE, 'GAT_PORT'))
+            self.GRAPHITE_SERVER = self.get_property('General', self.CONFIG_FILE, 'GRAPHITE_SERVER')
+            self.GRAPHITE_PORT = int(self.get_property('General', self.CONFIG_FILE, 'GRAPHITE_PORT'))
             self.ALERT = self.get_property('General', self.CONFIG_FILE, 'ALERT')
             self.ALERT_EVENTS = self.get_property('General', self.CONFIG_FILE, 'ALERT_EVENTS')
             self.ALERT_TYPES = self.get_property('General', self.CONFIG_FILE, 'ALERT_TYPES')
@@ -49,7 +57,7 @@ class CUtility:
             config = ConfigParser.ConfigParser()
             config.read(config_file)
             prop = config.get(category, key)
-            self.logger('Loaded required property { ' + key + ' = ' + prop + ' }')
+            self.logger('Loaded property { ' + key + ' = ' + prop + ' }')
         except:
             return prop
         return prop
