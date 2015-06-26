@@ -58,7 +58,7 @@ class Parent:
         # Create a TCP/IP socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # Bind the socket to the port
-        server_address = ('localhost', 10000)
+        server_address = ('localhost', CUtils.GAT_PORT)
         CUtils.logger('starting up on %s port %s' % server_address)
         sock.bind(server_address)
         # Listen for incoming connections
@@ -69,7 +69,7 @@ class Parent:
             connection, client_address = sock.accept()
             try:
                 CUtils.logger("connection from " + str(client_address))
-                data = str(connection.recv(1024))
+                data = str(connection.recv(CUtils.READ_BYTES))
                 CUtils.logger('received ' + data)
                 response = 'OK'
                 CUtils.logger('Send response ' + str(response))
