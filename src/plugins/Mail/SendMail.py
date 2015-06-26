@@ -19,7 +19,6 @@ class PMailer:
         """
         :type receiver: list
         """
-        print
         try:
             # Create message container - the correct MIME type is multipart/alternative.
             msg = MIMEMultipart('alternative')
