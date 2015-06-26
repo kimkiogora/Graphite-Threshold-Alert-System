@@ -18,7 +18,7 @@ Tests
 ----------
 Run the server using the init_script.sh, init_script.sh start. Server listens on port 10000
 
-Send data using netcat, echo "KE-B2C-SAF-Service-Failure-Rate-37-`date +%s`" |nc localhost 10000
+Send data using netcat, echo "Service-Name-X-Failure-Rate-37-`date +%s`" |nc localhost 10000
 
 Project Status
 ---------------
