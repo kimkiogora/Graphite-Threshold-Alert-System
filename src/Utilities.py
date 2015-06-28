@@ -1,16 +1,22 @@
-__author__ = "kim"
-__date__ = "$Jul, 2015 11:58:40 AM$"
+# Author    : kim kiogora <kimkiogora@gmail.com>
+# Usage     : Library with various functions
+# Version   : 1.0
+# Since     : 28 June 2015
 import sys
 import logging
 import ConfigParser
-
+import imp
+import os
 
 class CUtility:
     # Global dynamic variables [ data from external XML configs will be stored in this variables ]
+    MAX_WAIT_TIME = 3600*24
     READ_BYTES = 1024
     GAT_PORT = ''
     CONFIG_FILE = "conf/props.ini"
     SERVICES_CONFIG_FILE = "conf/service_configs.ini"
+    MAIL_PLUGIN = "plugins/Mail/SendMail.py"
+    SMS_PLUGIN = "plugins/SMS/SMSGateway.py"
     GRAPHITE_SERVER = ''
     GRAPHITE_PORT = ''
     ALERT = ''
@@ -21,10 +27,11 @@ class CUtility:
     MAX_CHILD_PROCESSES = 5
     WATCH_SERVICES = ''
     FAILED_LOG_FILE = ''
+    ALERT_HISTORY_FILE = 'alerts_history.txt'
     LOG_FILE = "/var/log/applications/GraphiteThresholdAlerter.log"
 
     infoLog = logging.getLogger('GraphiteThresholdAlerter')
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s",
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s|%(levelname)s|%(message)s",
                         filename=LOG_FILE, filemode='a')
 
     def load_properties(self):
@@ -64,3 +71,11 @@ class CUtility:
 
     def logger(self, message):
         self.infoLog.info(' %s ' % message)
+
+    def load_plugin(self, path, plugin_name):
+        mod_name, file_ext = os.path.splitext(os.path.split(path)[-1])
+        py_mod = imp.load_source(mod_name, path)
+
+        if hasattr(py_mod, plugin_name):
+            my_class = getattr(py_mod, plugin_name)()
+            return my_class
