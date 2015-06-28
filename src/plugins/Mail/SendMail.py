@@ -1,7 +1,12 @@
-# Author kim kiogora <kimkiogora@gmail.com>
+# Author    kim kiogora <kimkiogora@gmail.com>
+# Usage     Mail Plugin for sending mail alerts
+# Version   1.0
+# Since     28 June 2015
+
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import logging
 
 class PMailer:
     password = ''
@@ -13,12 +18,19 @@ class PMailer:
         pass
 
     def debug(self, message):
-        print message
+        #print message
+        pass
 
-    def process(self, message, receiver):
+    def process(self, message, receiver, log_file):
+        global status
+        info_log = logging.getLogger('PMailer')
+        logging.basicConfig(level=logging.INFO, format="%(asctime)s|%(levelname)s| %(message)s",
+                        filename=log_file, filemode='a')
         """
         :type receiver: list
         """
+        list_of_receivers = str(receiver).split(",")
+        info_log.info(" send mail to these people => %s" % str(list_of_receivers))
         try:
             # Create message container - the correct MIME type is multipart/alternative.
             msg = MIMEMultipart('alternative')
@@ -27,15 +39,16 @@ class PMailer:
             msg['To'] = receiver
 
             # Create the body of the message (a plain-text and an HTML version).
-            text = "Hi!\nHow are you?\nThis is an automated alert from Grafana:\n" \
-                   "Copyright (c) Alerter\n"
+            text = "Hi!\nHow are you?\nThis is an automated alert from GTA System:\n" \
+                   "Copyright(C) GTA System\n"
             html = """\
             <html>
               <head></head>
               <body>
                 <p>Hello<br>
-                   How are you ?<br>
+                   How are you ?<br>This is an automated alert from GTA System:<br>
                    %s
+                   <br>Copyright (C) GTA System</br>
                 </p>
               </body>
             </html>
@@ -51,34 +64,37 @@ class PMailer:
             msg.attach(part1)
             msg.attach(part2)
 
-            self.debug("Assembled message")
-            self.debug("Connecting to gmail...")
+            info_log.info(" Assembled message...")
+            info_log.info(" Content '%s'" % message)
+            info_log.info(" Connecting to GMail...")
 
             # Send the message via local SMTP server.
             mail = smtplib.SMTP('smtp.gmail.com', 587)
 
-            self.debug("Connected to gmail. Issue ehlo..")
+            info_log.info(" Connected to GMail. Issue ehlo..")
 
             mail.ehlo()
 
-            self.debug("Issued ehlo, starttls next...")
+            info_log.info(" Issued ehlo. Proceed to issue starttls next...")
 
             mail.starttls()
 
-            self.debug("starttls done, login....")
+            info_log.info(" starttls issued, now logging in....")
+
             mail.login(self.sender, self.password)
 
-            self.debug("Logged in to gmail.Send mail...")
+            info_log.info(" logged in to GMail, now sending mail alert...")
 
             mail.sendmail(self.sender, receiver, msg.as_string())
 
-            self.debug("Sent mail , quit...")
+            info_log.info(" Sent mail alert, signing out...")
 
             mail.quit()
 
-            self.debug("Quit.")
+            info_log.info(" Signed out.")
+
+            status = True
         except Exception, ex:
-            print ex
-#Test
-#mailer = PMailer()
-#mailer.process("Service Y Failure Rate Threshold surpassed at Value 100 ","xxx@yahoo.com")
+            info_log.info(" An error occurred during send mail, error %s" % str(ex))
+            status = False
+        return status
