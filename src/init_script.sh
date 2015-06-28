@@ -4,6 +4,7 @@ APPNAME=ThresholdAlerter
 script_home=/home/kim/PycharmProjects/GTA
 script_name="$script_home/$APPNAME.py"
 pid_file="/var/run/$APPNAME.pid"
+log_file="/var/log/applications/GraphiteThresholdAlerter.log"
 
 # returns a boolean and optionally the pid
 running() {
@@ -29,9 +30,15 @@ start() {
 stop() {
     # `kill -0 pid` returns successfully if the pid is running, but does not
     # actually kill it.
-    kill -0 $1 && kill $1
-    rm "$pid_file"
-    echo "stopped"
+    if [ "$1" -gt "0" ];then
+        echo "`date +'%Y-%m-%d %T,000'`|INFO| stopping application $APPNAME PID $1" >> $log_file
+        kill -0 $1 && kill $1
+        rm "$pid_file"
+        echo "stopped"
+        echo "`date +'%Y-%m-%d %T,000'`|INFO| $APPNAME PID $1 stopped" >> $log_file
+    else
+        echo "not running"
+    fi
 }
 
 read running pid < <(running)
