@@ -1,4 +1,4 @@
-# @Author	: Kim Kiogora	<kimkkiogora@gmail.com>
+# @Author   : Kim Kiogora	<kimkkiogora@gmail.com>
 # @Usage    : Alerts for graphite
 # Version   : 1.0
 # Since     : 28 June 2015
