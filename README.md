@@ -13,6 +13,7 @@ GTA System would receive input the same way you would push requests to graphite 
 cat /var/log/applications/some_info.log | grep "`date +%Y' '%b' '%d" "%H:%M --date '-5 min'`" |  grep -ic "some_unique_value"| xargs -I {} echo ` hostname`-Service-Failure-Rate {} `date +%s` |nc localhost 3001
 
 New command should be
+
 cat /var/log/applications/some_info.log | grep "`date +%Y' '%b' '%d" "%H:%M --date '-5 min'`" |  grep -ic "some_unique_value"| xargs -I {} echo ` hostname`-Service-Failure-Rate_{}_`date +%s` |nc localhost 10000
 
 
