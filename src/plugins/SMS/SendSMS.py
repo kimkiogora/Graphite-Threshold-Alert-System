@@ -35,3 +35,10 @@ class SMSHelper:
     'Add your EMG/SMS functionality here'
     #return 'OK'
     return 'FAIL'
+    
+#########################################
+# Sample test
+# sms_test = SMSHelper()
+# sms_test.process("This is a test for Graphana",
+#                 "mobile number A,mobile number B", "/var/log/applications/GraphiteThresholdAlerter.log")
+
