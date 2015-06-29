@@ -23,7 +23,7 @@ class SMSHelper:
       if self.get_sms_gateway_response(info_log, contact, message) == 'OK':
         success_sends += 1
       else:
-        info_log.info(" send sms to contact % failed" % contact)
+        info_log.info(" send sms to contact %s failed" % contact)
     success_rate = (100*success_sends)/total
     if success_rate > 1:
       status = True
