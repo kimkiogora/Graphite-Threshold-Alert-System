@@ -20,7 +20,7 @@ class SMSHelper:
 
     for contact in list_of_receivers:
       info_log.info(" send sms to contact => %s" % str(contact))
-      if self.get_sms_gateway_response(info_log, contact, message) == 'OK':
+      if self.get_sms_gateway_response(info_log, str(contact).replace(" ",""), message) == 'OK':
         success_sends += 1
       else:
         info_log.info(" send sms to contact %s failed" % contact)
