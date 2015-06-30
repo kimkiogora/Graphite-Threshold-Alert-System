@@ -161,7 +161,8 @@ class Task:
                                                 " and issue seems persistent...")
                             sent_status = False
                         else:
-                            self.c_utils.logger("alert already sent %d sec(s) ago. Nothing to do" % float(sec_elapsed))
+                            self.c_utils.logger("alert already sent %d sec(s) ago. Nothing to do. If this issue is "
+                                                "persistent, next alert will be sent after 24 hrs" % float(sec_elapsed))
                             sent_status = True
                         return sent_status
             except:
