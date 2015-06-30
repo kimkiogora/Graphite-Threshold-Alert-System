@@ -70,7 +70,7 @@ class Parent:
                 CUtils.logger('Closed connection, now working on data...')
                 # Close immediately to prevent Socket Blocking
                 # Improved processing
-                self.my_pool.add_task(self.create_task(data))
+                self.my_pool.add_task(self.create_task,data)
                 self.my_pool.wait_completion()
             except Exception, ex:
                 CUtils.logger("Exception occurred %s, continue waiting for new connection" % str(ex))
