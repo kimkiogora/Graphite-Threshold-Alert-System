@@ -19,8 +19,8 @@ cat /var/log/applications/some_info.log | grep "`date +%Y' '%b' '%d" "%H:%M --da
 
 Principle: The ` hostname`-Service-Failure-Rate, should be configured in the conf/props.ini on the value, WATCH_SERVICES as well as in the props/service_configs.ini . An alert will be sent based on the conditions provided for threshold. If not configured, then G.T.A system will just do normal routing via netcat
 
-Tests
-----------
-Run the server using the init_script.sh, init_script.sh start. Server listens on port 10000
+How to deploy and test
+----------------------
+Run the server using the init_script.sh, init_script.sh start or python ThresholdAlerter.py . The Server listens on port 10000 but is configurable from conf/props.ini file
 
 Send data using netcat, echo K-Service-Failure-Rate_31_1478181.9| nc localhost 10000
