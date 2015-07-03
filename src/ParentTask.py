@@ -82,6 +82,10 @@ class Task:
                             self.c_utils.get_property(service_monitor, self.c_utils.SERVICES_CONFIG_FILE, 'THRESHOLD'))
                         self.c_utils.logger("applying filter rules for alerts...")
                         if gat_size >= monitor_threshold_value:
+                            if self.push_via_netcat(request):
+                                self.c_utils.logger("request routed")
+                            else:
+                                self.c_utils.logger("request routing failed")
                             self.c_utils.logger("threshold value surpassed. Time to alert people...")
                             alert_message = self.c_utils.get_property(
                                 service_monitor, self.c_utils.SERVICES_CONFIG_FILE, 'MESSAGE')
