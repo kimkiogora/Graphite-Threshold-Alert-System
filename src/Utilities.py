@@ -13,6 +13,7 @@ class CUtility:
     MAX_WAIT_TIME = 3600*24
     READ_BYTES = 1024
     GAT_PORT = ''
+    GAT_HOST_IP = ''
     CONFIG_FILE = "conf/props.ini"
     SERVICES_CONFIG_FILE = "conf/service_configs.ini"
     MAIL_PLUGIN = "plugins/Mail/SendMail.py"
@@ -37,6 +38,7 @@ class CUtility:
     def load_properties(self):
         self.logger('Loading properties...')
         try:
+            self.GAT_HOST_IP = int(self.get_property('General', self.CONFIG_FILE, 'GAT_HOST_IP'))
             self.GAT_PORT = int(self.get_property('General', self.CONFIG_FILE, 'GAT_PORT'))
             self.GRAPHITE_SERVER = self.get_property('General', self.CONFIG_FILE, 'GRAPHITE_SERVER')
             self.GRAPHITE_PORT = int(self.get_property('General', self.CONFIG_FILE, 'GRAPHITE_PORT'))
