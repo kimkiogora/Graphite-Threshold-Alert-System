@@ -3,7 +3,7 @@ A customisable system that sits between graphite client and graphite backend ser
 
 Dependencies
 --------------
-Python version 2.7 > greater
+Python version 2.6 and greater
 Graphite/Grafana available from URL, http://graphite.wikidot.com/
 
 Design
