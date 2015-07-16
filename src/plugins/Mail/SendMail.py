@@ -12,7 +12,7 @@ class PMailer:
     password = ''
     sender = ''
     host = 'smtp.gmail.com'
-    port = '465'
+    port = 587
 
     def __init__(self):
         pass
@@ -39,7 +39,7 @@ class PMailer:
             msg['To'] = receiver
 
             # Create the body of the message (a plain-text and an HTML version).
-            text = "Hi!\nHow are you?\nThis is an automated alert from GTA System:\n" \
+            text = "Hi!\nThis is an automated alert from GTA System:\n" \
                    "Copyright(C) GTA System\n"
             html = """\
             <html>
@@ -69,7 +69,7 @@ class PMailer:
             info_log.info(" Connecting to GMail...")
 
             # Send the message via local SMTP server.
-            mail = smtplib.SMTP('smtp.gmail.com', 587)
+            mail = smtplib.SMTP('smtp.gmail.com', self.port)
 
             info_log.info(" Connected to GMail. Issue ehlo..")
 
