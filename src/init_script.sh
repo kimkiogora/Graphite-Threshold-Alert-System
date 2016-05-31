@@ -1,7 +1,7 @@
 #!/bin/bash
 # Author kim kiogora <kimkiogora@gmail.com>
 APPNAME=ThresholdAlerter
-script_home=/home/kim/PycharmProjects/GTA
+script_home=[ PATH TO ]/GTA
 script_name="$script_home/$APPNAME.py"
 pid_file="/var/run/$APPNAME.pid"
 log_file="/var/log/applications/GraphiteThresholdAlerter.log"
